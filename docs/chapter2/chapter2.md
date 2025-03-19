@@ -8,7 +8,7 @@
 
 # 第2章 模型评估与选择
 
-如"西瓜书"前言所述，本章仍属于机器学习基础知识，如果说第1章介绍了什么是机器学习及机器学习的相关数学符号，那么本章则进一步介绍机器学习的相关概念。具体来说，介绍内容正如本章名称"模型评估与选择"所述，讲述的是如何评估模型的优劣和选择最适合自己业务场景的模型。
+如"西瓜书"前言所述，本章仍属于机器学习基础知识，如果说第1章介绍了什么是**机器学习及机器学习**的相关数学符号，那么本章则进一步介绍机器学习的相关概念。具体来说，介绍内容正如本章名称"模型评估与选择"所述，讲述的是如何评估模型的优劣和选择最适合自己业务场景的模型。
 
 由于"模型评估与选择"是在模型产出以后进行的下游工作，要想完全吸收本章内容需要读者对模型有一些基本的认知，因此零基础的读者直接看本章会很吃力，实属正常，在此建议零基础的读者可以简单泛读本章，仅看能看懂的部分即可，或者直接跳过本章从第3章开始看，直至看完第6章以后再回头来看本章便会轻松许多。
 
@@ -34,7 +34,7 @@
 
 ## 2.2 评估方法
 
-本节介绍了3种模型评估方法：留出法、交叉验证法、自助法。留出法由于操作简单，因此最常用；交叉验证法常用于对比同一算法的不同参数配置之间的效果，以及对比不同算法之间的效果；自助法常用于集成学习（详见"西瓜书"第8章的8.2节和8.3节）产生基分类器。留出法和自助法简单易懂，在此不再赘述，下面举例说明交叉验证法的常用方式。
+本节介绍了3种模型评估方法：***留出法***、交叉验证法、自助法。留出法由于操作简单，因此最常用；交叉验证法常用于对比同一算法的不同参数配置之间的效果，以及对比不同算法之间的效果；自助法常用于集成学习（详见"西瓜书"第8章的8.2节和8.3节）产生基分类器。留出法和自助法简单易懂，在此不再赘述，下面举例说明交叉验证法的常用方式。
 
 **对比同一算法的不同参数配置之间的效果**：假设现有数据集$D$，且有一个被评估认为适合用于数据集$D$的算法$\mathfrak{L}$，该算法有可配置的参数，假设备选的参数配置方案有两套：方案$a$，方案$b$。下面通过交叉验证法为算法$\mathfrak{L}$筛选出在数据集$D$上效果最好的参数配置方案。以3折交叉验证为例，首先按照"西瓜书"中所说的方法，通过分层采样将数据集$D$划分为3个大小相似的互斥子集：$D_{1},D_{2},D_{3}$，然后分别用其中1个子集作为测试集，其他子集作为训练集，这样就可获得3组训练集和测试集：
 
@@ -56,7 +56,7 @@
 
 ### 2.2.2 验证集
 
-带有参数的算法一般需要从候选参数配置方案中选择相对于当前数据集的最优参数配置方案，例如支持向量机的参数$C$，一般采用的是前面讲到的交叉验证法，但是交叉验证法操作起来较为复杂，实际中更多采用的是：先用留出法将数据集划分出训练集和测试集，然后再对训练集采用留出法划分出训练集和新的测试集，称新的测试集为验证集，接着基于验证集的测试结果来调参选出最优参数配置方案，最后将验证集合并进训练集（训练集数据量够的话也可不合并），用选出的最优参数配置在合并后的训练集上重新训练，再用测试集来评估训练得到的模型的性能。
+带有参数的算法一般需要从候选参数配置方案中选择相对于当前数据集的最优参数配置方案，例如支持向量机的参数$C$，一般采用的是前面讲到的交叉验证法，但是交叉验证法操作起来较为复杂，实际中更多采用的是：先用留出法将数据集划分出训练集和测试集，然后再对训练集采用留出法划分出训练集和新的测试集，称新的测试集为验证集，接着基于验证集的测试结果来调参选出最优参数配置方案，最后将验证集合并进训练集（训练集数据量够的话也可不合并），用选出的最优参数配置在合并后的训练集上重新训练，再用测试集来评估训练得到的模型的性能。（画个图来理解）
 
 ## 2.3 性能度量
 
@@ -80,21 +80,27 @@ P-R曲线的画法与ROC曲线的画法类似，也是通过依次改变模型�
 
 将式(2.8)和式(2.9)代入式(2.10)，得
 
-$$\begin{aligned}
+$$
+\begin{aligned}
 F1 &=\frac{2 \times P \times R}{P+R}=\frac{2 \times \frac{TP}{TP+FP} \times \frac{TP}{TP+FN}}{\frac{TP}{TP+FP}+\frac{TP}{TP+FN}} \\
 &=\frac{2 \times TP \times TP}{TP(TP+FN)+T P(TP+FP)} \\
 &=\frac{2 \times TP}{(TP+FN)+(TP+FP)}\\
 &=\frac{2 \times TP}{(TP+FN+FP+TN)+TP-TN}\\
 &=\frac{2 \times TP}{\text{样例总数}+TP-TN}\\
-\end{aligned}$$
+\end{aligned}
+$$
 
 若现有数据集$D=\left\{\left(\boldsymbol{x}_{i}, y_{i}\right) \mid 1 \leqslant i \leqslant m\right\}$，其中标记$y_{i}\in\{0,1\}$（1表示正例，0表示反例），假设模型$f(\boldsymbol{x})$对$\boldsymbol{x}_{i}$的预测结果为$h_i\in\{0,1\}$，则模型$f(\boldsymbol{x})$在数据集$D$上的$F1$为
 
-$$F1=\frac{2 \sum_{i=1}^{m} y_{i} h_{i}}{\sum_{i=1}^{m} y_{i}+\sum_{i=1}^{m} h_{i}}$$
+$$
+F1=\frac{2 \sum_{i=1}^{m} y_{i} h_{i}}{\sum_{i=1}^{m} y_{i}+\sum_{i=1}^{m} h_{i}}
+$$
 
 不难看出上式的本质为
 
-$$F1=\frac{2 \times TP}{(TP+FN)+(TP+FP)}$$
+$$
+F1=\frac{2 \times TP}{(TP+FN)+(TP+FP)}
+$$
 
 ### 2.3.5 式(2.11)的解释
 
@@ -102,7 +108,9 @@ $$F1=\frac{2 \times TP}{(TP+FN)+(TP+FP)}$$
 
 式(2.11)下方有提到"$\beta>1$时查全率有更大影响；$\beta<1$时查准率有更大影响"，下面解释其原因。将式(2.11)恒等变形为如下形式
 
-$$F_{\beta}=\frac{1}{\frac{1}{1+\beta^{2}}\cdot\frac{1}{P}+\frac{\beta^{2}}{1+\beta^{2}}\cdot\frac{1}{R}}$$
+$$
+F_{\beta}=\frac{1}{\frac{1}{1+\beta^{2}}\cdot\frac{1}{P}+\frac{\beta^{2}}{1+\beta^{2}}\cdot\frac{1}{R}}
+$$
 
 从上式可以看出，当$\beta>1$时$\frac{\beta^{2}}{1+\beta^{2}}>\frac{1}{1+\beta^{2}}$，所以$\frac{1}{R}$的权重比$\frac{1}{P}$的权重高，因此查全率$R$对$F_{\beta}$的影响更大，反之查准率$P$对$F_{\beta}$的影响更大。
 
@@ -122,10 +130,12 @@ $$F_{\beta}=\frac{1}{\frac{1}{1+\beta^{2}}\cdot\frac{1}{P}+\frac{\beta^{2}}{1+\b
 
 除了真正例率TPR和假正例率FPR，还有真反例率TNR和假反例率FNR：
 
-$$\begin{aligned}
+$$
+\begin{aligned}
     \mathrm{TNR}=\frac{TN}{FP+TN} \\
     \mathrm{FNR}=\frac{FN}{TP+FN}
-\end{aligned}$$
+\end{aligned}
+$$
 
 ### 2.3.8 式(2.20)的推导
 
@@ -133,10 +143,12 @@ $$\begin{aligned}
 
 假设我们已经训练得到一个学习器$f(\boldsymbol{s})$，现在用该学习器来对8个测试样本（4个正例，4个反例，即$m^+=m^-=4$）进行预测，预测结果为 **（此处用$\boldsymbol{s}$表示样本，以和坐标$(x,y)$作出区分）**：
 
-$$\begin{aligned}
+$$
+\begin{aligned}
 &(\boldsymbol{s}_1,0.77,+),(\boldsymbol{s}_2,0.62,-),(\boldsymbol{s}_3,0.58,+),(\boldsymbol{s}_4,0.47,+),\\
 &(\boldsymbol{s}_5,0.47,-),(\boldsymbol{s}_6,0.33,-),(\boldsymbol{s}_7,0.23,+),(\boldsymbol{s}_8,0.15,-)
-\end{aligned}$$
+\end{aligned}
+$$
 
 其中，$+$和$-$分别表示样本为正例和为反例，数字表示学习器$f$预测该样本为正例的概率，例如对于反例$\boldsymbol{s}_2$来说，当前学习器$f(\boldsymbol{s})$预测它是正例的概率为$0.62$。
 
@@ -150,11 +162,15 @@ $\boldsymbol{s}_{1}$被预测为正例，由于它的真实标记也是正例，
 
 在这里，为了能在解释式(2.21)时复用此图，我们没有写上具体的数值，转而用其数学符号代替。其中绿色线段表示在分类阈值变动的过程中只新增了真正例，红色线段表示只新增了假正例，蓝色线段表示既新增了真正例也新增了假正例。根据$\text{AUC}$值的定义可知，此时的$\text{AUC}$值其实就是所有红色线段和蓝色线段与$x$轴围成的面积之和。观察图2-1可知，红色线段与$x$轴围成的图形恒为矩形，蓝色线段与$x$轴围成的图形恒为梯形。由于梯形面积式既能算梯形面积，也能算矩形面积，所以无论是红色线段还是蓝色线段，其与$x$轴围成的面积都能用梯形公式来计算：
 
-$$\frac{1}{2}\cdot(x_{i+1} - x_{i})\cdot(y_{i} + y_{i+1})$$
+$$
+\frac{1}{2}\cdot(x_{i+1} - x_{i})\cdot(y_{i} + y_{i+1})
+$$
 
 其中，$(x_{i+1} - x_i)$为"高"，$y_i$为"上底"，$y_{i+1}$为"下底"。那么对所有红色线段和蓝色线段与$x$轴围成的面积进行求和，则有
 
-$$\sum_{i=1}^{m-1}\left[\frac{1}{2}\cdot(x_{i+1} - x_{i})\cdot(y_{i} + y_{i+1})\right]$$
+$$
+\sum_{i=1}^{m-1}\left[\frac{1}{2}\cdot(x_{i+1} - x_{i})\cdot(y_{i} + y_{i+1})\right]
+$$
 
 此即为$\text{AUC}$。
 
@@ -164,46 +180,60 @@ $$\sum_{i=1}^{m-1}\left[\frac{1}{2}\cdot(x_{i+1} - x_{i})\cdot(y_{i} + y_{i+1})\
 
 下面针对"西瓜书"上所说的"$\ell_{rank}$对应的是ROC曲线之上的面积"进行推导。按照我们上述对式(2.20)的推导思路，$\ell_{rank}$可以看作是所有绿色线段和蓝色线段与$y$轴围成的面积之和，但从式(2.21)中很难一眼看出其面积的具体计算方式，因此我们进行恒等变形如下：
 
-$$\begin{aligned}
+$$
+\begin{aligned}
 \ell_{rank}&=\frac{1}{m^+m^-}\sum_{\boldsymbol{x}^+ \in D^+}\sum_{\boldsymbol{x}^- \in D^-}\left(\mathbb{I}\left(f(\boldsymbol{x}^+)<f(\boldsymbol{x}^-)\right)+\frac{1}{2}\mathbb{I}\left(f(\boldsymbol{x}^+)=f(\boldsymbol{x}^-)\right)\right) \\
 &=\frac{1}{m^+m^-}\sum_{\boldsymbol{x}^+ \in D^+}\left[\sum_{\boldsymbol{x}^- \in D^-}\mathbb{I}\left(f(\boldsymbol{x}^+)<f(\boldsymbol{x}^-)\right)+\frac{1}{2}\cdot\sum_{\boldsymbol{x}^- \in D^-}\mathbb{I}\left(f(\boldsymbol{x}^+)=f(\boldsymbol{x}^-)\right)\right] \\
 &=\sum_{\boldsymbol{x}^+ \in D^+}\left[\frac{1}{m^+}\cdot\frac{1}{m^-}\sum_{\boldsymbol{x}^- \in D^-}\mathbb{I}\left(f(\boldsymbol{x}^+)<f(\boldsymbol{x}^-)\right)+\frac{1}{2}\cdot\frac{1}{m^+}\cdot\frac{1}{m^-}\sum_{\boldsymbol{x}^- \in D^-}\mathbb{I}\left(f(\boldsymbol{x}^+)=f(\boldsymbol{x}^-)\right)\right] \\
 &=\sum_{\boldsymbol{x}^+ \in D^+}\frac{1}{2}\cdot\frac{1}{m^+}\cdot\left[\frac{2}{m^-}\sum_{\boldsymbol{x}^- \in D^-}\mathbb{I}\left(f(\boldsymbol{x}^+)<f(\boldsymbol{x}^-)\right)+\frac{1}{m^-}\sum_{\boldsymbol{x}^- \in D^-}\mathbb{I}\left(f(\boldsymbol{x}^+)=f(\boldsymbol{x}^-)\right)\right] \\
-\end{aligned}$$
+\end{aligned}
+$$
 
 在变动分类阈值的过程当中，如果有新增真正例，那么图2-1就会相应地增加一条绿色线段或蓝色线段，所以上式中的$\sum_{\boldsymbol{x}^+ \in D^+}$可以看作是在累加所有绿色和蓝色线段，相应地，$\sum_{\boldsymbol{x}^+
 \in D^+}$后面的内容便是在求绿色线段或者蓝色线段与$y$轴围成的面积，即：
 
-$$\frac{1}{2}\cdot\frac{1}{m^+}\cdot\left[\frac{2}{m^-}\sum_{\boldsymbol{x}^- \in D^-}\mathbb{I}\left(f(\boldsymbol{x}^+)<f(\boldsymbol{x}^-)\right)+\frac{1}{m^-}\sum_{\boldsymbol{x}^- \in D^-}\mathbb{I}\left(f(\boldsymbol{x}^+)=f(\boldsymbol{x}^-)\right)\right]$$
+$$
+\frac{1}{2}\cdot\frac{1}{m^+}\cdot\left[\frac{2}{m^-}\sum_{\boldsymbol{x}^- \in D^-}\mathbb{I}\left(f(\boldsymbol{x}^+)<f(\boldsymbol{x}^-)\right)+\frac{1}{m^-}\sum_{\boldsymbol{x}^- \in D^-}\mathbb{I}\left(f(\boldsymbol{x}^+)=f(\boldsymbol{x}^-)\right)\right]
+$$
 
 与式(2.20)中的推导思路相同，不论是绿色线段还是蓝色线段，其与$y$轴围成的图形面积都可以用梯形公式来进行计算，所以上式表示的依旧是一个梯形的面积公式。其中$\frac{1}{m^+}$即梯形的"高"，中括号内便是"上底+下底"，下面我们来分别推导一下"上底"（较短的底）
 和"下底"（较长的底）。
 
 由于在绘制$\text{ROC}$曲线的过程中，每新增一个假正例时$x$坐标也就新增一个步长，所以对于"上底"，也就是绿色或者蓝色线段的下端点到$y$轴的距离，长度就等于$\frac{1}{m^-}$乘以预测值大于$f(\boldsymbol{x}^+)$的假正例的个数，即
 
-$$\frac{1}{m^-}\sum\limits_{\boldsymbol{x}^- \in D^-}\mathbb{I}\left(f(\boldsymbol{x}^+)<f(\boldsymbol{x}^-)\right)$$
+$$
+\frac{1}{m^-}\sum\limits_{\boldsymbol{x}^- \in D^-}\mathbb{I}\left(f(\boldsymbol{x}^+)<f(\boldsymbol{x}^-)\right)
+$$
 
 而对于"下底"，长度就等于$\frac{1}{m^-}$乘以预测值大于等于$f(\boldsymbol{x}^+)$的假正例的个数，即
 
-$$\frac{1}{m^-}\left(\sum_{\boldsymbol{x}^- \in D^-}\mathbb{I}\left(f(\boldsymbol{x}^+)<f(\boldsymbol{x}^-)\right)+\sum_{\boldsymbol{x}^- \in D^-}\mathbb{I}\left(f(\boldsymbol{x}^+)=f(\boldsymbol{x}^-)\right)\right)$$
+$$
+\frac{1}{m^-}\left(\sum_{\boldsymbol{x}^- \in D^-}\mathbb{I}\left(f(\boldsymbol{x}^+)<f(\boldsymbol{x}^-)\right)+\sum_{\boldsymbol{x}^- \in D^-}\mathbb{I}\left(f(\boldsymbol{x}^+)=f(\boldsymbol{x}^-)\right)\right)
+$$
 
 到此，推导完毕。
 
 若不考虑$f(\boldsymbol{x}^+)=f(\boldsymbol{x}^-)$，从直观上理解$\ell_{rank}$，其表示的是：对于待测试的模型$f(\boldsymbol{x})$，从测试集中随机抽取一个正反例对儿$\{\boldsymbol{x}^{+},\boldsymbol{x}^{-}\}$，模型$f(\boldsymbol{x})$对正例的打分$f(\boldsymbol{x}^{+})$小于对反例的打分$f(\boldsymbol{x}^{-})$的概率，即"排序错误"的概率。推导思路如下：采用频率近似概率的思路，组合出测试集中的所有正反例对儿，假设组合出来的正反例对儿的个数为$m$，用模型$f(\boldsymbol{x})$对所有正反例对儿打分并统计"排序错误"的正反例对儿个数$n$，然后计算出$\frac{n}{m}$即为模型$f(\boldsymbol{x})$"排序错误"的正反例对儿的占比，其可近似看作为$f(\boldsymbol{x})$在测试集上"排序错误"的概率。具体推导过程如下：测试集中的所有正反例对儿的个数为
 
-$$m^+\times m^-$$ 
+$$
+m^+\times m^-$$ 
 
 "排序错误"的正反例对儿个数为
 
-$$\sum_{\boldsymbol{x}^+ \in D^+}\sum_{\boldsymbol{x}^- \in D^-}\left(\mathbb{I}\left(f(\boldsymbol{x}^+)<f(\boldsymbol{x}^-)\right)\right)$$
+$$\sum_{\boldsymbol{x}^+ \in D^+}\sum_{\boldsymbol{x}^- \in D^-}\left(\mathbb{I}\left(f(\boldsymbol{x}^+)<f(\boldsymbol{x}^-)\right)\right)
+$$
 
 因此，"排序错误"的概率为
 
-$$\frac{\sum_{\boldsymbol{x}^+ \in D^+}\sum_{\boldsymbol{x}^- \in D^-}\left(\mathbb{I}\left(f(\boldsymbol{x}^+)<f(\boldsymbol{x}^-)\right)\right)}{m^+\times m^-}$$
+$$
+\frac{\sum_{\boldsymbol{x}^+ \in D^+}\sum_{\boldsymbol{x}^- \in D^-}\left(\mathbb{I}\left(f(\boldsymbol{x}^+)<f(\boldsymbol{x}^-)\right)\right)}{m^+\times m^-}
+$$
 
 若再考虑$f(\boldsymbol{x}^+)=f(\boldsymbol{x}^-)$时算半个"排序错误"，则上式可进一步扩展为
 
-$$\frac{\sum_{\boldsymbol{x}^+ \in D^+}\sum_{\boldsymbol{x}^- \in D^-}\left(\mathbb{I}\left(f(\boldsymbol{x}^+)<f(\boldsymbol{x}^-)+\frac{1}{2}\mathbb{I}\left(f(\boldsymbol{x}^+)=f(\boldsymbol{x}^-)\right)\right)\right)}{m^+\times m^-}$$
+$$
+\frac{\sum_{\boldsymbol{x}^+ \in D^+}\sum_{\boldsymbol{x}^- \in D^-}\left(\mathbb{I}\left(f(\boldsymbol{x}^+)<f(\boldsymbol{x}^-)+\frac{1}{2}\mathbb{I}\left(f(\boldsymbol{x}^+)=f(\boldsymbol{x}^-)\right)\right)\right)}{m^+\times m^-}
+$$
 
 此即为$\ell_{rank}$。
 
@@ -213,10 +243,12 @@ $$\frac{\sum_{\boldsymbol{x}^+ \in D^+}\sum_{\boldsymbol{x}^- \in D^-}\left(\mat
 
 本公式很容易理解，只是需要注意该公式上方交代了"若将表2.2中的第0类作为正类、第1类作为反类"，若不注意此条件，按习惯（0为反类、1为正类）会产生误解。为避免产生误解，在接下来的解释中将$cost_{01}$记为$cost_{+-}$，$cost_{10}$记为$cost_{-+}$。本公式还可以作如下恒等变形
 
-$$\begin{aligned}
+$$
+\begin{aligned}
 E(f;D;cost) &=\frac{1}{m}\left(m^{+} \times \frac{1}{m^{+}} \sum_{\boldsymbol{x}_{i} \in D^{+}} \mathbb{I}\left(f\left(\boldsymbol{x}_{i} \neq y_{i}\right)\right) \times cost_{+-}+m^{-} \times \frac{1}{m^{-}} \sum_{\boldsymbol{x}_{i} \in D^{-}} \mathbb{I}\left(f\left(\boldsymbol{x}_{i} \neq y_{i}\right)\right) \times cost_{-+}\right) \\
 &=\frac{m^{+}}{m} \times \frac{1}{m^{+}} \sum_{\boldsymbol{x}_{i} \in D^{+}} \mathbb{I}\left(f\left(\boldsymbol{x}_{i} \neq y_{i}\right)\right) \times cost_{+-}+\frac{m^{-}}{m} \times \frac{1}{m^{-}} \sum_{\boldsymbol{x}_{i} \in D^{-}} \mathbb{I}\left(f\left(\boldsymbol{x}_{i} \neq y_{i}\right)\right) \times cost_{-+}
-\end{aligned}$$
+\end{aligned}
+$$
 
 其中$m^{+}$和$m^{-}$分别表示正例集$D^{+}$和反例集$D^{-}$的样本个数。
 
@@ -230,7 +262,9 @@ $\frac{m^{-}}{m}$表示样例集$D$中反例所占比例，或理解为随机从
 
 因此，若将样例为正例的概率$\frac{m^{+}}{m}$记为$p$，则样例为f反例的概率$\frac{m^{-}}{m}$为$1-p$，上式可进一步写为
 
-$$E(f;D;cost)=p \times \mathrm{FNR} \times cost_{+-}+(1-p) \times \mathrm{FPR} \times cost_{-+}$$
+$$
+E(f;D;cost)=p \times \mathrm{FNR} \times cost_{+-}+(1-p) \times \mathrm{FPR} \times cost_{-+}
+$$
 
 此公式在接下来式(2.25)的解释中会用到。
 
@@ -238,22 +272,30 @@ $$E(f;D;cost)=p \times \mathrm{FNR} \times cost_{+-}+(1-p) \times \mathrm{FPR} \
 
 当$cost_{+-}=cost_{-+}$时，本公式可化简为
 
-$$P(+)cost=\frac{p}{p+(1-p)}=p$$
+$$
+P(+)cost=\frac{p}{p+(1-p)}=p
+$$
 
 其中$p$是样例为正例的概率（一般用正例在样例集中所占的比例近似代替）。因此，当代价不敏感时（也即$cost_{+-}=cost_{-+}$），$P(+)cost$就是正例在样例集中的占比。那么，当代价敏感时（也即$cost_{+-}\neq cost_{-+}$），$P(+)cost$即为正例在样例集中的加权占比。具体来说，对于样例集
 
-$$D=\left\{\boldsymbol{x}_{1}^{+}, \boldsymbol{x}_{2}^{+}, \boldsymbol{x}_{3}^{-}, \boldsymbol{x}_{4}^{-}, \boldsymbol{x}_{5}^{-}, \boldsymbol{x}_{6}^{-}, \boldsymbol{x}_{7}^{-}, \boldsymbol{x}_{8}^{-}, \boldsymbol{x}_{9}^{-}, \boldsymbol{x}_{10}^{-}\right\}$$
+$$
+D=\left\{\boldsymbol{x}_{1}^{+}, \boldsymbol{x}_{2}^{+}, \boldsymbol{x}_{3}^{-}, \boldsymbol{x}_{4}^{-}, \boldsymbol{x}_{5}^{-}, \boldsymbol{x}_{6}^{-}, \boldsymbol{x}_{7}^{-}, \boldsymbol{x}_{8}^{-}, \boldsymbol{x}_{9}^{-}, \boldsymbol{x}_{10}^{-}\right\}
+$$
 
 其中$\boldsymbol{x}^{+}$表示正例，$\boldsymbol{x}^{-}$表示反例。可以看出$p=0.2$，若想让正例得到更多重视，考虑代价敏感$cost_{+-}=4$和$cost_{-+}=1$，这实际等价于在以下样例集上进行代价不敏感的正例概率代价计算
 
-$$D^{\prime}=\left\{\boldsymbol{x}_{1}^{+}, \boldsymbol{x}_{1}^{+}, \boldsymbol{x}_{1}^{+}, \boldsymbol{x}_{1}^{+}, \boldsymbol{x}_{2}^{+}, \boldsymbol{x}_{2}^{+}, \boldsymbol{x}_{2}^{+}, \boldsymbol{x}_{2}^{+}, \boldsymbol{x}_{3}^{-}, \boldsymbol{x}_{4}^{-}, \boldsymbol{x}_{5}^{-}, \boldsymbol{x}_{6}^{-}, \boldsymbol{x}_{7}^{-}, \boldsymbol{x}_{8}^{-}, \boldsymbol{x}_{9}^{-}, \boldsymbol{x}_{10}^{-}\right\}$$
+$$
+D^{\prime}=\left\{\boldsymbol{x}_{1}^{+}, \boldsymbol{x}_{1}^{+}, \boldsymbol{x}_{1}^{+}, \boldsymbol{x}_{1}^{+}, \boldsymbol{x}_{2}^{+}, \boldsymbol{x}_{2}^{+}, \boldsymbol{x}_{2}^{+}, \boldsymbol{x}_{2}^{+}, \boldsymbol{x}_{3}^{-}, \boldsymbol{x}_{4}^{-}, \boldsymbol{x}_{5}^{-}, \boldsymbol{x}_{6}^{-}, \boldsymbol{x}_{7}^{-}, \boldsymbol{x}_{8}^{-}, \boldsymbol{x}_{9}^{-}, \boldsymbol{x}_{10}^{-}\right\}
+$$
 
 即将每个正例样本复制4份，若有1个出错，则有4个一起出错，代价为4。此时可计算出
 
-$$\begin{aligned}
+$$
+\begin{aligned}
 P(+) cost &=\frac{p \times cost_{+-}}{p \times cost_{+-}+(1-p) \times cost_{-+}} \\
 &=\frac{0.2 \times 4}{0.2 \times 4+(1-0.2) \times 1}=0.5
-\end{aligned}$$
+\end{aligned}
+$$
 
 也就是正例在等价的样例集$D^{\prime}$中的占比。所以，无论代价敏感还是不敏感，$P(+)cost$本质上表示的都是样例集中正例的占比。在实际应用过程中，如果由于某种原因无法将$cost_{+-}$和$cost_{-+}$设为不同取值，可以采用上述"复制样本"的方法间接实现将$cost_{+-}$和$cost_{-+}$设为不同取值。
 
@@ -261,16 +303,20 @@ P(+) cost &=\frac{p \times cost_{+-}}{p \times cost_{+-}+(1-p) \times cost_{-+}}
 
 此外，根据此式还可以相应地推导出反例概率代价
 
-$$P(-) cost=1-P(+) cost=\frac{(1-p) \times cost_{-+}}{p \times cost_{+-}+(1-p) \times cost_{-+}}$$
+$$
+P(-) cost=1-P(+) cost=\frac{(1-p) \times cost_{-+}}{p \times cost_{+-}+(1-p) \times cost_{-+}}
+$$
 
 ### 2.3.12 式(2.25)的解释
 
 对于包含$m$个样本的样例集$D$，可以算出学习器$f(\boldsymbol{x})$总的代价是
 
-$$\begin{aligned}
+$$
+\begin{aligned}
 cost_{se} &=m \times p \times \mathrm{FNR} \times cost_{+-}+m \times(1-p) \times \mathrm{FPR} \times cost_{-+} \\
 &+m \times p \times \mathrm{TPR} \times cost_{++}+m \times(1-p) \times \mathrm{TNR} \times cost_{--}
-\end{aligned}$$
+\end{aligned}
+$$
 
 其中$p$是正例在样例集中所占的比例（或严格地称为样例为正例的概率），$cost_{se}$下标中的"se"表示sensitive，即代价敏感，根据前面讲述的FNR、FPR、TPR、TNR的定义可知：
 
@@ -284,21 +330,29 @@ $m \times(1-p) \times \mathrm{TNR}$表示反例预测为反例（反例预测正
 
 以上各种样本个数乘以相应的代价则得到总的代价$cost_{se}$。但是，按照此公式计算出的代价与样本个数$m$呈正比，显然不具有一般性，因此需要除以样本个数$m$，而且一般来说，预测出错才会产生代价，预测正确则没有代价，也即$cost_{++}=cost_{--}=0$，所以$cost_{se}$更为一般化的表达式为
 
-$$cost_{se} = p \times \mathrm{FNR} \times cost_{+-}+(1-p) \times \mathrm{FPR} \times cost_{-+}$$
+$$
+cost_{se} = p \times \mathrm{FNR} \times cost_{+-}+(1-p) \times \mathrm{FPR} \times cost_{-+}
+$$
 
 回顾式(2.23)的解释可知，此式即为式(2.23)的恒等变形，所以此式可以同式(2.23)一样理解为学习器$f(\boldsymbol{x})$在样例集$D$上的"代价敏感错误率"。显然，$cost_{se}$的取值范围并不在0到1之间，且$cost_{se}$在$\mathrm{FNR}=\mathrm{FPR}=1$时取到最大值，因为$\mathrm{FNR}=\mathrm{FPR}=1$时表示所有正例均被预测为反例，反例均被预测为正例，代价达到最大，即
 
-$$max(cost_{se})=p \times cost_{+-}+(1-p) \times cost_{-+}$$
+$$
+max(cost_{se})=p \times cost_{+-}+(1-p) \times cost_{-+}
+$$
 
 所以，如果要将$cost_{se}$的取值范围归一化到0到1之间，则只需将其除以其所能取到的最大值即可，也即
 
-$$\frac{cost_{se}}{max(cost_{se})}=\frac{p \times \mathrm{FNR} \times cost_{+-}+(1-p) \times \mathrm{FPR} \times cost_{-+}}{p \times cost_{+-}+(1-p) \times cost_{-+}}$$
+$$
+\frac{cost_{se}}{max(cost_{se})}=\frac{p \times \mathrm{FNR} \times cost_{+-}+(1-p) \times \mathrm{FPR} \times cost_{-+}}{p \times cost_{+-}+(1-p) \times cost_{-+}}
+$$
 
 此即为式(2.25)，也即为$cost_{norm}$，其中下标"norm"表示normalization。
 
 进一步地，根据式(2.24)中$P(+)cost$的定义可知，式(2.25)可以恒等变形为
 
-$$cost_{norm}=\mathrm{FNR} \times P(+)cost+\mathrm{FPR} \times(1-P(+)cost)$$
+$$
+cost_{norm}=\mathrm{FNR} \times P(+)cost+\mathrm{FPR} \times(1-P(+)cost)
+$$
 
 对于二维直角坐标系中的两个点$(0,B)$和$(1,A)$以及实数$p\in[0,1]$，$(p,pA+(1-p)B)$一定是线段$A-B$上的点，且当$p$从0变到1时，点$(p,pA+(1-p)B)$的轨迹为从$(0,B)$到$(1,A)$，基于此，结合上述$cost_{norm}$的表达式可知：$(P(+)cost, cost_{norm})$即为线段$\mathrm{FPR}-\mathrm{FNR}$上的点，当$(P(+)cost$从0变到1时，$(P(+)cost, cost_{norm})$的轨迹为从$(0,\mathrm{FPR})$到$(1,\mathrm{FNR})$
 ，也即图2.5中的各条线段。需要注意的是，以上只是从数学逻辑自洽的角度对图2.5中的各条线段进行解释，实际中各条线段并非按照上述方法绘制。理由如下：
@@ -317,27 +371,34 @@ $P(+)cost$表示的是样例集中正例的占比，而在进行学习器的比�
 
 理解本公式时需要明确的是：$\epsilon$是未知的，是当前希望估算出来的，$\hat{\epsilon}$是已知的，是已经用$m$个测试样本对学习器进行测试得到的。因此，本公式也可理解为：当学习器的泛化错误率为$\epsilon$时，被测得测试错误率为$\hat{\epsilon}$的条件概率。所以本公式可以改写为
 
-$$P(\hat{\epsilon}|\epsilon)=\left(\begin{array}{c}
+$$
+P(\hat{\epsilon}|\epsilon)=\left(\begin{array}{c}
 m \\
 \hat{\epsilon} \times m
-\end{array}\right) \epsilon^{\hat{\epsilon} \times m}(1-\epsilon)^{m-\hat{\epsilon} \times m}$$
+\end{array}\right) \epsilon^{\hat{\epsilon} \times m}(1-\epsilon)^{m-\hat{\epsilon} \times m}
+$$
 
 其中
 
-$$\left(\begin{array}{c}
+$$
+\left(\begin{array}{c}
 m \\
 \hat{\epsilon} \times m
-\end{array}\right)=\frac{m !}{(\hat{\epsilon} \times m) !(m-\hat{\epsilon} \times m) !}$$
+\end{array}\right)=\frac{m !}{(\hat{\epsilon} \times m) !(m-\hat{\epsilon} \times m) !}
+$$
 
 为中学时学的组合数，即$C_{m}^{\hat{\epsilon} \times m}$。
 
 在已知$\hat{\varepsilon}$时，求使得条件概率$P(\hat{\epsilon}|\epsilon)$达到最大的$\epsilon$是概率论与数理统计中经典的极大似然估计问题。从极大似然估计的角度可知，由于$\hat{\epsilon},m$均为已知量，所以$P(\hat{\epsilon}|\epsilon)$可以看作为一个关于$\epsilon$的函数，称为似然函数，于是问题转化为求使得似然函数取到最大值的$\epsilon$，即
 
-$$\epsilon=\mathop{\arg\max}_{\epsilon}P(\hat{\epsilon}|\epsilon)$$
+$$
+\epsilon=\mathop{\arg\max}_{\epsilon}P(\hat{\epsilon}|\epsilon)
+$$
 
 首先对$\epsilon$求一阶导数
 
-$$\begin{aligned}
+$$
+\begin{aligned}
 \frac{\partial P(\hat{\epsilon} \mid \epsilon)}{\partial \epsilon} &=\left(\begin{array}{c}
 m \\
 \hat{\epsilon} \times m
@@ -354,7 +415,8 @@ m \\
 m \\
 \hat{\epsilon} \times m
 \end{array}\right) \epsilon^{\hat{\epsilon} \times m-1}(1-\epsilon)^{m-\hat{\epsilon} \times m-1}(\hat{\epsilon} \times m-\epsilon \times m)
-\end{aligned}$$
+\end{aligned}
+$$
 
 分析上式可知，其中$\left(\begin{array}{c}
 m \\
@@ -365,67 +427,89 @@ m \\
 
 截至2021年5月，"西瓜书"第1版第36次印刷，式(2.27)应当勘误为
 
-$$\overline{\epsilon}=\min \epsilon\quad\text { s.t. } \sum_{i=\epsilon\times m+1}^{m}\left(\begin{array}{c}{m} \\ {i}\end{array}\right) \epsilon_0^{i}(1-\epsilon_0)^{m-i}<\alpha$$
+$$
+\overline{\epsilon}=\min \epsilon\quad\text { s.t. } \sum_{i=\epsilon\times m+1}^{m}\left(\begin{array}{c}{m} \\ {i}\end{array}\right) \epsilon_0^{i}(1-\epsilon_0)^{m-i}<\alpha
+$$
 
 在推导此公式之前，先铺垫讲解一下"二项分布参数$p$的假设检验"[1]：
 
 设某事件发生的概率为$p$，$p$未知。做$m$次独立试验，每次观察该事件是否发生，以$X$记该事件发生的次数，则$X$服从二项分布$B(m,p)$，现根据$X$检验如下假设：
 
-$$\begin{aligned}
+$$
+\begin{aligned}
 H_0:p\leqslant p_0\\
 H_1:p > p_0
-\end{aligned}$$
+\end{aligned}
+$$
 
 由二项分布本身的特性可知：$p$越小，$X$取到较小值的概率越大。因此，对于上述假设，一个直观上合理的检验为
 
-$$\varphi:\text{当}X>C\text{时拒绝}H_0,\text{否则就接受}H_0\text{。}$$
+$$
+\varphi:\text{当}X>C\text{时拒绝}H_0,\text{否则就接受}H_0\text{。}
+$$
 
 其中，$C$表示事件最大发生次数。此检验对应的功效函数为
 
-$$\begin{aligned}
+$$
+\begin{aligned}
 \beta_{\varphi}(p)&=P(X>C)\\
 &=1-P(X\leqslant C) \\
 &=1-\sum_{i=0}^{C}\left(\begin{array}{c}{m} \\ {i}\end{array}\right) p^{i} (1-p)^{m-i} \\
 &=\sum_{i=C+1}^{m}\left(\begin{array}{c}{m} \\ {i}\end{array}\right) p^{i} (1-p)^{m-i} \\
-\end{aligned}$$
+\end{aligned}
+$$
 
 由于"$p$越小，$X$取到较小值的概率越大"可以等价表示为：$P(X\leqslant C)$是关于$p$的减函数，所以$\beta_{\varphi}(p)=P(X>C)=1-P(X\leqslant C)$是关于$p$的增函数，那么当$p\leqslant p_0$时，$\beta_{\varphi}(p_0)$即为$\beta_{\varphi}(p)$的上确界。 **（更为严格的数学证明参见参考文献[1]中第2章习题7）** 又根据参考文献[1]中5.1.3的定义1.2可知，在给定检验水平$\alpha$时，要想使得检验$\varphi$达到水平$\alpha$，则必须保证$\beta_{\varphi}(p)\leqslant\alpha$，因此可以通过如下方程解得使检验$\varphi$达到水平$\alpha$的整数$C$：
 
-$$\alpha =\sup \left\{\beta_{\varphi}(p)\right\}$$
+$$
+\alpha =\sup \left\{\beta_{\varphi}(p)\right\}
+$$
 
 显然，当$p\leqslant p_0$时有
 
-$$\begin{aligned}
+$$
+\begin{aligned}
 \alpha &=\sup \left\{\beta_{\varphi}(p)\right\} \\
 &=\beta_{\varphi}(p_0) \\
 &=\sum_{i=C+1}^{m}\left(\begin{array}{c}{m} \\ {i}\end{array}\right) p_0^{i} (1-p_0)^{m-i}
-\end{aligned}$$
+\end{aligned}
+$$
 
 对于此方程，通常不一定正好解得一个使得方程成立的整数$C$，较常见的情况是存在这样一个$\overline{C}$使得
 
-$$\begin{aligned}
+$$
+\begin{aligned}
 \sum_{i=\overline{C}+1}^{m}\left(\begin{array}{c}{m} \\ {i}\end{array}\right) p_0^{i} (1-p_0)^{m-i}<\alpha \\
 \sum_{i=\overline{C}}^{m}\left(\begin{array}{c}{m} \\ {i}\end{array}\right) p_0^{i} (1-p_0)^{m-i}>\alpha
-\end{aligned}$$
+\end{aligned}
+$$
 
 此时，$C$只能取$\overline{C}$或者$\overline{C}+1$。若$C$取$\overline{C}$，
 则相当于升高了检验水平$\alpha$；若$C$取$\overline{C}+1$则相当于降低了检验水平$\alpha$。具体如何取舍需要结合实际情况，一般的做法是使$\alpha$尽可能小，因此倾向于令$C$取$\overline{C}+1$。
 
 下面考虑如何求解$\overline{C}$。易证$\beta_{\varphi}(p_0)$是关于$C$的减函数，再结合上述关于$\overline{C}$的两个不等式易推得
 
-$$\overline{C}=\min C\quad\text { s.t. } \sum_{i=C+1}^{m}\left(\begin{array}{c}{m} \\ {i}\end{array}\right) p_0^{i}(1-p_0)^{m-i}<\alpha$$
+$$
+\overline{C}=\min C\quad\text { s.t. } \sum_{i=C+1}^{m}\left(\begin{array}{c}{m} \\ {i}\end{array}\right) p_0^{i}(1-p_0)^{m-i}<\alpha
+$$
 
 由"西瓜书"中的上下文可知，对$\epsilon\leqslant\epsilon_0$进行假设检验，等价于"二项分布参数$p$的假设检验"中所述的对$p\leqslant p_0$进行假设检验，所以在"西瓜书"中求解最大错误率$\overline{\epsilon}$等价于在"二项分布参数$p$的假设检验"中求解事件最大发生频率$\frac{\overline{C}}{m}$。由上述"二项分布参数$p$的假设检验"中的推导可知
 
-$$\overline{C}=\min C\quad\text { s.t. } \sum_{i=C+1}^{m}\left(\begin{array}{c}{m} \\ {i}\end{array}\right) p_0^{i}(1-p_0)^{m-i}<\alpha$$
+$$
+\overline{C}=\min C\quad\text { s.t. } \sum_{i=C+1}^{m}\left(\begin{array}{c}{m} \\ {i}\end{array}\right) p_0^{i}(1-p_0)^{m-i}<\alpha
+$$
 
 所以
 
-$$\frac{\overline{C}}{m}=\min \frac{C}{m}\quad\text { s.t. } \sum_{i=C+1}^{m}\left(\begin{array}{c}{m} \\ {i}\end{array}\right) p_0^{i}(1-p_0)^{m-i}<\alpha$$
+$$
+\frac{\overline{C}}{m}=\min \frac{C}{m}\quad\text { s.t. } \sum_{i=C+1}^{m}\left(\begin{array}{c}{m} \\ {i}\end{array}\right) p_0^{i}(1-p_0)^{m-i}<\alpha
+$$
 
 将上式中的$\frac{\overline{C}}{m},\frac{C}{m},p_0$等价替换为$\overline{\epsilon},\epsilon,\epsilon_0$可得
 
-$$\overline{\epsilon}=\min \epsilon\quad\text { s.t. } \sum_{i=\epsilon\times m+1}^{m}\left(\begin{array}{c}{m} \\ {i}\end{array}\right) \epsilon_0^{i}(1-\epsilon_0)^{m-i}<\alpha$$
+$$
+\overline{\epsilon}=\min \epsilon\quad\text { s.t. } \sum_{i=\epsilon\times m+1}^{m}\left(\begin{array}{c}{m} \\ {i}\end{array}\right) \epsilon_0^{i}(1-\epsilon_0)^{m-i}<\alpha
+$$
 
 ## 2.5 偏差与方差
 
@@ -437,22 +521,29 @@ $$\overline{\epsilon}=\min \epsilon\quad\text { s.t. } \sum_{i=\epsilon\times m+
 
 式(2.37)可理解为：
 
-$$\bar{f}(\boldsymbol{x})=\mathbb{E}_{D}[f(\boldsymbol{x} ; D)]=\frac{1}{n}\left(f\left(\boldsymbol{x} ; D_{1}\right)+\ldots+f\left(\boldsymbol{x} ; D_{n}\right)\right)$$
+$$
+\bar{f}(\boldsymbol{x})=\mathbb{E}_{D}[f(\boldsymbol{x} ; D)]=\frac{1}{n}\left(f\left(\boldsymbol{x} ; D_{1}\right)+\ldots+f\left(\boldsymbol{x} ; D_{n}\right)\right)
+$$
 
-式(2.38)可理解为： 
+式(2.38)可理解为：
 
-$$\begin{aligned}
+$$
+\begin{aligned}
 \operatorname{var}(\boldsymbol{x}) &=\mathbb{E}_{D}\left[(f(\boldsymbol{x} ; D)-\bar{f}(\boldsymbol{x}))^{2}\right] \\
 &=\frac{1}{n}\left(\left(f\left(\boldsymbol{x} ; D_{1}\right)-\bar{f}(\boldsymbol{x})\right)^{2}+\ldots+\left(f\left(\boldsymbol{x} ; D_{n}\right)-\bar{f}(\boldsymbol{x})\right)^{2}\right)
-\end{aligned}$$
+\end{aligned}
+$$
 
 式(2.39)可理解为：
 
-$$\varepsilon^{2}=\mathbb{E}_{D}\left[\left(y_{D}-y\right)^{2}\right]=\frac{1}{n}\left(\left(y_{D_{1}}-y\right)^{2}+\ldots+\left(y_{D_{n}}-y\right)^{2}\right)$$
+$$
+\varepsilon^{2}=\mathbb{E}_{D}\left[\left(y_{D}-y\right)^{2}\right]=\frac{1}{n}\left(\left(y_{D_{1}}-y\right)^{2}+\ldots+\left(y_{D_{n}}-y\right)^{2}\right)
+$$
 
 最后，推导一下式(2.41)和式(2.42)，由于推导完式(2.41)自然就会得到式(2.42)，因此下面仅推导式(2.41)即可。
 
-$$\begin{aligned} 
+$$
+\begin{aligned} 
 E(f ; D)=& \mathbb{E}_{D}\left[\left(f(\boldsymbol{x} ; D)-y_{D}\right)^{2}\right] &\textcircled{1}\\
 =& \mathbb{E}_{D}\left[\left(f(\boldsymbol{x} ; D)-\bar{f}(\boldsymbol{x})+\bar{f}(\boldsymbol{x})-y_{D}\right)^{2}\right] &\textcircled{2}\\
 =& \mathbb{E}_{D}\left[\left(f(\boldsymbol{x} ; D)-\bar{f}(\boldsymbol{x})\right)^{2}\right]+\mathbb{E}_{D}\left[\left(\bar{f}(\boldsymbol{x})-y_{D}\right)^{2}\right]+ \\ &\mathbb{E}_{D}\left[2\left(f(\boldsymbol{x} ; D)-\bar{f}(\boldsymbol{x})\right)\left(\bar{f}(\boldsymbol{x})-y_{D}\right)\right] &\textcircled{3}\\
@@ -460,7 +551,8 @@ E(f ; D)=& \mathbb{E}_{D}\left[\left(f(\boldsymbol{x} ; D)-y_{D}\right)^{2}\righ
 =& \mathbb{E}_{D}\left[\left(f(\boldsymbol{x} ; D)-\bar{f}(\boldsymbol{x})\right)^{2}\right]+\mathbb{E}_{D}\left[\left(\bar{f}(\boldsymbol{x})-y+y-y_{D}\right)^{2}\right] &\textcircled{5}\\
 =& \mathbb{E}_{D}\left[\left(f(\boldsymbol{x} ; D)-\bar{f}(\boldsymbol{x})\right)^{2}\right]+\mathbb{E}_{D}\left[\left(\bar{f}(\boldsymbol{x})-y\right)^{2}\right]+\mathbb{E}_{D}\left[\left(y-y_{D}\right)^{2}\right]+ \\ &2 \mathbb{E}_{D}\left[\left(\bar{f}(\boldsymbol{x})-y\right)\left(y-y_{D}\right)\right]&\textcircled{6}\\
 =& \mathbb{E}_{D}\left[\left(f(\boldsymbol{x} ; D)-\bar{f}(\boldsymbol{x})\right)^{2}\right]+\left(\bar{f}(\boldsymbol{x})-y\right)^{2}+\mathbb{E}_{D}\left[\left(y_{D}-y\right)^{2}\right] &\textcircled{7}
-\end{aligned}$$
+\end{aligned}
+$$
 
 上式即为式(2.41)，下面给出每一步的推导过程：
 
@@ -468,27 +560,40 @@ $\textcircled{1}\to\textcircled{2}$：减一个$\bar{f}(\boldsymbol{x})$再加�
 
 $\textcircled{2}\to\textcircled{3}$：首先将中括号内的式子展开，有
 
-$$\mathbb{E}_{D}\left[\left(f(\boldsymbol{x} ; D)-\bar{f}(\boldsymbol{x})\right)^{2}+\left(\bar{f}(\boldsymbol{x})-y_{D}\right)^{2}+2\left(f(\boldsymbol{x} ; D)-\bar{f}(\boldsymbol{x})\right)\left(\bar{f}(\boldsymbol{x})-y_{D}\right)\right]$$
+$$
+\mathbb{E}_{D}\left[\left(f(\boldsymbol{x} ; D)-\bar{f}(\boldsymbol{x})\right)^{2}+\left(\bar{f}(\boldsymbol{x})-y_{D}\right)^{2}+2\left(f(\boldsymbol{x} ; D)-\bar{f}(\boldsymbol{x})\right)\left(\bar{f}(\boldsymbol{x})-y_{D}\right)\right]
+$$
 
 然后根据期望的运算性质$\mathbb{E}[X+Y]=\mathbb{E}[X]+\mathbb{E}[Y]$可将上式化为
 
-$$\mathbb{E}_{D}\left[\left(f(\boldsymbol{x} ; D)-\bar{f}(\boldsymbol{x})\right)^{2}\right]+\mathbb{E}_{D}\left[\left(\bar{f}(\boldsymbol{x})-y_{D}\right)^{2}\right] +\mathbb{E}_{D}\left[2\left(f(\boldsymbol{x} ; D)-\bar{f}(\boldsymbol{x})\right)\left(\bar{f}(\boldsymbol{x})-y_{D}\right)\right]$$
+$$
+\mathbb{E}_{D}\left[\left(f(\boldsymbol{x} ; D)-\bar{f}(\boldsymbol{x})\right)^{2}\right]+\mathbb{E}_{D}\left[\left(\bar{f}(\boldsymbol{x})-y_{D}\right)^{2}\right] +\mathbb{E}_{D}\left[2\left(f(\boldsymbol{x} ; D)-\bar{f}(\boldsymbol{x})\right)\left(\bar{f}(\boldsymbol{x})-y_{D}\right)\right]
+$$
 
 $\textcircled{3}\to\textcircled{4}$：再次利用期望的运算性质将$\textcircled{3}$的最后一项展开，有
 
-$$\mathbb{E}_{D}\left[2\left(f(\boldsymbol{x} ; D)-\bar{f}(\boldsymbol{x})\right)\left(\bar{f}(\boldsymbol{x})-y_{D}\right)\right] = \mathbb{E}_{D}\left[2\left(f(\boldsymbol{x} ; D)-\bar{f}(\boldsymbol{x})\right)\cdot\bar{f}(\boldsymbol{x})\right] - \mathbb{E}_{D}\left[2\left(f(\boldsymbol{x} ; D)-\bar{f}(\boldsymbol{x})\right)\cdot y_{D}\right]$$
+$$
+\mathbb{E}_{D}\left[2\left(f(\boldsymbol{x} ; D)-\bar{f}(\boldsymbol{x})\right)\left(\bar{f}(\boldsymbol{x})-y_{D}\right)\right] = \mathbb{E}_{D}\left[2\left(f(\boldsymbol{x} ; D)-\bar{f}(\boldsymbol{x})\right)\cdot\bar{f}(\boldsymbol{x})\right] - \mathbb{E}_{D}\left[2\left(f(\boldsymbol{x} ; D)-\bar{f}(\boldsymbol{x})\right)\cdot y_{D}\right]
+$$
 
 首先计算展开后得到的第1项，有
 
-$$\mathbb{E}_{D}\left[2\left(f(\boldsymbol{x} ; D)-\bar{f}(\boldsymbol{x})\right)\cdot\bar{f}(\boldsymbol{x})\right] = \mathbb{E}_{D}\left[2f(\boldsymbol{x} ; D)\cdot\bar{f}(\boldsymbol{x})-2\bar{f}(\boldsymbol{x})\cdot\bar{f}(\boldsymbol{x})\right]$$
+$$
+\mathbb{E}_{D}\left[2\left(f(\boldsymbol{x} ; D)-\bar{f}(\boldsymbol{x})\right)\cdot\bar{f}(\boldsymbol{x})\right] = \mathbb{E}_{D}\left[2f(\boldsymbol{x} ; D)\cdot\bar{f}(\boldsymbol{x})-2\bar{f}(\boldsymbol{x})\cdot\bar{f}(\boldsymbol{x})\right]
+$$
 
 由于$\bar{f}(\boldsymbol{x})$是常量，所以由期望的运算性质：$\mathbb{E}[AX+B]=A\mathbb{E}[X]+B$（其中$A,B$均为常量）可得
 
-$$\mathbb{E}_{D}\left[2\left(f(\boldsymbol{x} ; D)-\bar{f}(\boldsymbol{x})\right)\cdot\bar{f}(\boldsymbol{x})\right] = 2\bar{f}(\boldsymbol{x})\cdot\mathbb{E}_{D}\left[f(\boldsymbol{x} ; D)\right]-2\bar{f}(\boldsymbol{x})\cdot\bar{f}(\boldsymbol{x})$$
+$$
+\mathbb{E}_{D}\left[2\left(f(\boldsymbol{x} ; D)-\bar{f}(\boldsymbol{x})\right)\cdot\bar{f}(\boldsymbol{x})\right] = 2\bar{f}(\boldsymbol{x})\cdot\mathbb{E}_{D}\left[f(\boldsymbol{x} ; D)\right]-2\bar{f}(\boldsymbol{x})\cdot\bar{f}(\boldsymbol{x})
+$$
 
 由式(2.37)可知$\mathbb{E}_{D}\left[f(\boldsymbol{x} ; D)\right]=\bar{f}(\boldsymbol{x})$，所以
 
-$$\mathbb{E}_{D}\left[2\left(f(\boldsymbol{x} ; D)-\bar{f}(\boldsymbol{x})\right)\cdot\bar{f}(\boldsymbol{x})\right] = 2\bar{f}(\boldsymbol{x})\cdot\bar{f}(\boldsymbol{x})-2\bar{f}(\boldsymbol{x})\cdot\bar{f}(\boldsymbol{x})=0$$
+$$
+\mathbb{E}_{D}\left[2\left(f(\boldsymbol{x} ; D)-\bar{f}(\boldsymbol{x})\right)\cdot\bar{f}(\boldsymbol{x})\right] = 2\bar{f}(\boldsymbol{x})\cdot\bar{f}(\boldsymbol{x})-2\bar{f}(\boldsymbol{x})\cdot\bar{f}(\boldsymbol{x})=0
+$$
+
 接着计算展开后得到的第2项
 
 $$
@@ -497,19 +602,23 @@ $$
 
 由于噪声和$f$无关，所以$f(\boldsymbol{x} ; D)$和$y_D$是两个相互独立的随机变量。根据期望的运算性质$\mathbb{E}[XY]=\mathbb{E}[X]\mathbb{E}[Y]$（其中$X$和$Y$为相互独立的随机变量）可得
 
-$$\begin{aligned} 
+$$
+\begin{aligned} 
 \mathbb{E}_{D}\left[2\left(f(\boldsymbol{x} ; D)-\bar{f}(\boldsymbol{x})\right)\cdot y_{D}\right]&=2\mathbb{E}_{D}\left[f(\boldsymbol{x} ; D)\cdot y_{D}\right]-2\bar{f}(\boldsymbol{x})\cdot \mathbb{E}_{D}\left[y_{D}\right]\\
 &=2\mathbb{E}_{D}\left[f(\boldsymbol{x} ; D)\right]\cdot \mathbb{E}_{D}\left[y_{D}\right]-2\bar{f}(\boldsymbol{x})\cdot \mathbb{E}_{D}\left[y_{D}\right]\\
 &=2\bar{f}(\boldsymbol{x})\cdot \mathbb{E}_{D}\left[y_{D}\right]-2\bar{f}(\boldsymbol{x})\cdot \mathbb{E}_{D}\left[y_{D}\right]\\
 &= 0
-\end{aligned}$$
+\end{aligned}
+$$
 
 所以
 
-$$\begin{aligned} \mathbb{E}_{D}\left[2\left(f(\boldsymbol{x} ; D)-\bar{f}(\boldsymbol{x})\right)\left(\bar{f}(\boldsymbol{x})-y_{D}\right)\right] &= \mathbb{E}_{D}\left[2\left(f(\boldsymbol{x} ; D)-\bar{f}(\boldsymbol{x})\right)\cdot\bar{f}(\boldsymbol{x})\right] - \mathbb{E}_{D}\left[2\left(f(\boldsymbol{x} ; D)-\bar{f}(\boldsymbol{x})\right)\cdot y_{D}\right] \\
+$$
+\begin{aligned} \mathbb{E}_{D}\left[2\left(f(\boldsymbol{x} ; D)-\bar{f}(\boldsymbol{x})\right)\left(\bar{f}(\boldsymbol{x})-y_{D}\right)\right] &= \mathbb{E}_{D}\left[2\left(f(\boldsymbol{x} ; D)-\bar{f}(\boldsymbol{x})\right)\cdot\bar{f}(\boldsymbol{x})\right] - \mathbb{E}_{D}\left[2\left(f(\boldsymbol{x} ; D)-\bar{f}(\boldsymbol{x})\right)\cdot y_{D}\right] \\
 &= 0+0 \\
 &=0
-\end{aligned}$$
+\end{aligned}
+$$
 
 $\textcircled{4}\to\textcircled{5}$：同$\textcircled{1}\to\textcircled{2}$一样，减一个$y$再加一个$y$，属于简单的恒等变形。
 
@@ -517,15 +626,22 @@ $\textcircled{5}\to\textcircled{6}$：同$\textcircled{2}\to\textcircled{3}$一�
 
 $\textcircled{6}\to\textcircled{7}$：因为$\bar{f}(\boldsymbol{x})$和$y$均为常量，根据期望的运算性质，$\textcircled{6}$中的第2项可化为
 
-$$\mathbb{E}_{D}\left[\left(\bar{f}(\boldsymbol{x})-y\right)^{2}\right]=\left(\bar{f}(\boldsymbol{x})-y\right)^{2}$$
+$$
+\mathbb{E}_{D}\left[\left(\bar{f}(\boldsymbol{x})-y\right)^{2}\right]=\left(\bar{f}(\boldsymbol{x})-y\right)^{2}
+$$
 
 同理，$\textcircled{6}$中的最后一项可化为
 
-$$2\mathbb{E}_{D}\left[\left(\bar{f}(\boldsymbol{x})-y\right)\left(y-y_{D}\right)\right]=2\left(\bar{f}(\boldsymbol{x})-y\right)\mathbb{E}_{D}\left[\left(y-y_{D}\right)\right]$$
+$$
+2\mathbb{E}_{D}\left[\left(\bar{f}(\boldsymbol{x})-y\right)\left(y-y_{D}\right)\right]=2\left(\bar{f}(\boldsymbol{x})-y\right)\mathbb{E}_{D}\left[\left(y-y_{D}\right)\right]
+$$
 
 由于此时假定噪声的期望为0，即$\mathbb{E}_{D}\left[\left(y-y_{D}\right)\right]=0$，所以
 
-$$2\mathbb{E}_{D}\left[\left(\bar{f}(\boldsymbol{x})-y\right)\left(y-y_{D}\right)\right]=2\left(\bar{f}(\boldsymbol{x})-y\right)\cdot 0=0$$
+$$
+2\mathbb{E}_{D}\left[\left(\bar{f}(\boldsymbol{x})-y\right)\left(y-y_{D}\right)\right]=2\left(\bar{f}(\boldsymbol{x})-y\right)\cdot 0=0
+$$
 
 ## 参考文献
+
 [1] 陈希孺. 概率论与数理统计. 中国科学技术大学出版社, 2009.

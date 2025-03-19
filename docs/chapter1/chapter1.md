@@ -8,7 +8,7 @@
 
 # 第1章 绪论
 
-本章作为"西瓜书"的开篇，主要讲解什么是机器学习以及机器学习的相关数学符号，为后续内容作铺垫，并未涉及复杂的算法理论，因此阅读本章时只需耐心梳理清楚所有概念和数学符号即可。此外，在阅读本章前建议先阅读西瓜书目录前页的《主要符号表》，它能解答在阅读"西瓜书"过程中产生的大部分对数学符号的疑惑。
+本章作为"西瓜书"的开篇，主要讲解什么是机器学习以及机器学习的相关数学符号，为后续内容作铺垫，并未涉及复杂的算法理论，因此阅读本章时只需耐心梳理清楚所有概念和数学符号即可。此外，在阅读本章前建议先阅读==西瓜书目录前页的《主要符号表》==，它能解答在阅读"西瓜书"过程中产生的大部分对数学符号的疑惑。
 
 本章也作为本书的开篇，笔者在此赘述一下本书的撰写初衷，本书旨在以"过来人"的视角陪读者一起阅读"西瓜书"，尽力帮读者消除阅读过程中的"数学恐惧"，只要读者学习过《高等数学》、《线性代数》和《概率论与数理统计》这三门大学必修的数学课，均能看懂本书对西瓜书中的公式所做的解释和推导，同时也能体会到这三门数学课在机器学习上碰撞产生的"数学之美"。
 
@@ -32,17 +32,15 @@
 
 根据标记的取值类型不同，可将机器学习任务分为以下两类：
 
--   当标记取值为离散型时，称此类任务为"分类"，例如学习西瓜是好瓜还是坏瓜、学习猫的图片是白猫还是黑猫等。当分类的类别只有两个时，称此类任务为"二分类"，通常称其中一个为"正类"，另一个为"反类"或"负类"；当分类的类别超过两个时，称此类任务为"多分类"。由于标记也属于样本的一部分，通常也需要参与运算，因此也需要将其数值化，例如对于二分类任务，通常将正类记为$1$，反类记为$0$，即$\mathcal{Y}=\{0,1\}$。这只是一般默认的做法，具体标记该如何数值化可根据具体机器学习算法进行相应地调整，例如第6章的支持向量机算法则采用的是$\mathcal{Y}=\{-1,+1\}$；
-
--   当标记取值为连续型时，称此类任务为"回归"，例如学习预测西瓜的成熟度、学习预测未来的房价等。由于是连续型，因此标记的所有可能取值无法直接罗列，通常只有取值范围，回归任务的标记取值范围通常是整个实数域$\mathbb{R}$，即$\mathcal{Y}=\mathbb{R}$。
+- 当标记取值为离散型时，称此类任务为"分类"，例如学习西瓜是好瓜还是坏瓜、学习猫的图片是白猫还是黑猫等。当分类的类别只有两个时，称此类任务为"二分类"，通常称其中一个为"正类"，另一个为"反类"或"负类"；当分类的类别超过两个时，称此类任务为"多分类"。由于标记也属于样本的一部分，通常也需要参与运算，因此也需要将其数值化，例如对于二分类任务，通常将正类记为$1$，反类记为$0$，即$\mathcal{Y}=\{0,1\}$。这只是一般默认的做法，具体标记该如何数值化可根据具体机器学习算法进行相应地调整，例如第6章的支持向量机算法则采用的是$\mathcal{Y}=\{-1,+1\}$；
+- 当标记取值为连续型时，称此类任务为"回归"，例如学习预测西瓜的成熟度、学习预测未来的房价等。由于是连续型，因此标记的所有可能取值无法直接罗列，通常只有取值范围，回归任务的标记取值范围通常是整个实数域$\mathbb{R}$，即$\mathcal{Y}=\mathbb{R}$。
 
 无论是分类还是回归，机器学习算法最终学得的模型都可以抽象地看作为以样本$\boldsymbol{x}$为自变量，标记$y$为因变量的函数$y=f(\boldsymbol{x})$，即一个从输入空间$\mathcal{X}$到输出空间$\mathcal{Y}$的映射。例如在学习西瓜的好坏时，机器学习算法学得的模型可看作为一个函数$f(\boldsymbol{x})$，给定任意一个西瓜样本$\boldsymbol{x}_{i}=(\text{青绿};\text{蜷缩};\text{清脆})$，将其输入进函数即可计算得到一个输出$y_{i}=f(\boldsymbol{x}_{i})$，此时得到的$y_{i}$便是模型给出的预测结果，当$y_i$取值为$1$时表明模型认为西瓜$\boldsymbol{x}_{i}$是好瓜，当$y_i$取值为$0$时表明模型认为西瓜$\boldsymbol{x}_{i}$是坏瓜。
 
 根据是否有用到标记信息，可将机器学习任务分为以下两类：
 
--   在模型训练阶段有用到标记信息时，称此类任务为"监督学习"，例如第3章的线性模型；
-
--   在模型训练阶段没用到标记信息时，称此类任务为"无监督学习"，例如第9章的聚类。
+- 在模型训练阶段有用到标记信息时，称此类任务为"监督学习"，例如第3章的线性模型；
+- 在模型训练阶段没用到标记信息时，称此类任务为"无监督学习"，例如第9章的聚类。
 
 **泛化**：由于机器学习的目标是根据已知来对未知做出尽可能准确的判断，因此对未知事物判断的准确与否才是衡量一个模型好坏的关键，我们称此为"泛化"能力。例如学习西瓜好坏时，假设训练集中共有3个样本：$\{(\boldsymbol{x}_{1}=(\text{青绿};\text{蜷缩}),y_{1}=\text{好瓜}),(\boldsymbol{x}_{2}=(\text{乌黑};\text{蜷缩}),y_{2}=\text{好瓜}),(\boldsymbol{x}_{3}=(\text{浅白};\text{蜷缩}),y_{3}=\text{好瓜})\}$，同时假设判断西瓜好坏的真相是"只要根蒂蜷缩就是好瓜"，如果应用算法$A$在此训练集上训练得到模型$f_{a}(\boldsymbol{x})$，模型$a$学到的规律是"色泽等于青绿、乌黑或者浅白时，同时根蒂蜷缩即为好瓜，否则便是坏瓜"，再应用算法$B$在此训练集上训练得到模型$f_{b}(\boldsymbol{x})$，模型$f_{b}(\boldsymbol{x})$学到的规律是"只要根蒂蜷缩就是好瓜"，因此对于一个未见过的西瓜样本$\boldsymbol{x}=(\text{金黄};\text{蜷缩})$来说，模型$f_{a}(\boldsymbol{x})$给出的预测结果为"坏瓜"，模型$f_{b}(\boldsymbol{x})$给出的预测结果为"好瓜"，此时我们称模型$f_{b}(\boldsymbol{x})$的泛化能力优于模型$f_{a}(\boldsymbol{x})$。
 
@@ -72,33 +70,41 @@
 
 ### 1.4.1 式(1.1)和式(1.2)的解释
 
-$$\begin{aligned}
+$$
+\begin{aligned}
 \sum_{f}E_{ote}(\mathfrak{L}_a| X,f) &= \sum_f\sum_h\sum_{\boldsymbol{x}\in\mathcal{X}-X}P(\boldsymbol{x})\mathbb{I}(h(\boldsymbol{x})\neq f(\boldsymbol{x}))P(h| X,\mathfrak{L}_a)&\textcircled{1}\\
 &=\sum_{\boldsymbol{x}\in\mathcal{X}-X}P(\boldsymbol{x}) \sum_hP(h| X,\mathfrak{L}_a)\sum_f\mathbb{I}(h(\boldsymbol{x})\neq f(\boldsymbol{x}))&\textcircled{2}  \\
 &=\sum_{\boldsymbol{x}\in\mathcal{X}-X}P(\boldsymbol{x}) \sum_hP(h| X,\mathfrak{L}_a)\cfrac{1}{2}2^{| \mathcal{X} |}&\textcircled{3} \\
 &=\cfrac{1}{2}2^{| \mathcal{X} |}\sum_{\boldsymbol{x}\in\mathcal{X}-X}P(\boldsymbol{x}) \sum_hP(h| X,\mathfrak{L}_a)&\textcircled{4} \\
 &=2^{| \mathcal{X} |-1}\sum_{\boldsymbol{x}\in\mathcal{X}-X}P(\boldsymbol{x}) \cdot 1 &\textcircled{5}\\
-\end{aligned}$$
+\end{aligned}
+$$
 
 $\textcircled{1} \to \textcircled{2}$：
 
-$$\begin{aligned}
+$$
+\begin{aligned}
 &\sum_f\sum_h\sum_{\boldsymbol{x}\in\mathcal{X}-X}P(\boldsymbol{x})\mathbb{I}(h(\boldsymbol{x})\neq f(\boldsymbol{x}))P(h| X,\mathfrak{L}_a) \\
 &=\sum_{\boldsymbol{x}\in\mathcal{X}-X}P(\boldsymbol{x})\sum_f\sum_h\mathbb{I}(h(\boldsymbol{x})\neq f(\boldsymbol{x}))P(h| X,\mathfrak{L}_a) \\
 &=\sum_{\boldsymbol{x}\in\mathcal{X}-X}P(\boldsymbol{x}) \sum_hP(h| X,\mathfrak{L}_a)\sum_f\mathbb{I}(h(\boldsymbol{x})\neq f(\boldsymbol{x})) \\
-\end{aligned}$$
+\end{aligned}
+$$
 
 $\textcircled{2} \to \textcircled{3}$：首先要知道此时我们假设$f$是任何能将样本映射到$\{0,1\}$的函数。存在不止一个$f$时，$f$服从均匀分布，即每个$f$出现的概率相等。例如样本空间只有两个样本时，$\mathcal{X}=\{\boldsymbol{x}_1,\boldsymbol{x}_2\},|
 \mathcal{X} |=2$。那么所有可能的真实目标函数$f$如下：
 
-$$\begin{aligned}
+$$
+\begin{aligned}
 f_1:f_1(\boldsymbol{x}_1)=0,f_1(\boldsymbol{x}_2)=0\\
 f_2:f_2(\boldsymbol{x}_1)=0,f_2(\boldsymbol{x}_2)=1\\
 f_3:f_3(\boldsymbol{x}_1)=1,f_3(\boldsymbol{x}_2)=0\\
 f_4:f_4(\boldsymbol{x}_1)=1,f_4(\boldsymbol{x}_2)=1
-\end{aligned}$$
+\end{aligned}
+$$
 
 一共$2^{| \mathcal{X} |}=2^2=4$个可能的真实目标函数。所以此时通过算法$\mathfrak{L}_a$学习出来的模型$h(\boldsymbol{x})$对每个样本无论预测值为0还是1，都必然有一半的$f$与之预测值相等。例如，现在学出来的模型$h(\boldsymbol{x})$对$\boldsymbol{x}_1$的预测值为1，即$h(\boldsymbol{x}_1)=1$，那么有且只有$f_3$和$f_4$与$h(\boldsymbol{x})$的预测值相等，也就是有且只有一半的$f$与它预测值相等，所以$\sum_f\mathbb{I}(h(\boldsymbol{x})\neq
 f(\boldsymbol{x})) = \frac{1}{2}2^{| \mathcal{X} |}$。
 
 需要注意的是，在这里我们假设真实的目标函数$f$服从均匀分布，但是实际情形并非如此，通常我们只认为能高度拟合已有样本数据的函数才是真实目标函数，例如，现在已有的样本数据为$\{(\boldsymbol{x}_1,0),(\boldsymbol{x}_2,1)\}$，那么此时$f_2$才是我们认为的真实目标函数，由于没有收集到或者压根不存在$\{(\boldsymbol{x}_1,0),(\boldsymbol{x}_2,0)\}\{(\boldsymbol{x}_1,1),(\boldsymbol{x}_2,0)\},\{(\boldsymbol{x}_1,1),(\boldsymbol{x}_2,1)\}$这类样本，所以$f_1,f_3,f_4$都不算是真实目标函数。套用到上述"房价预测"的例子中，我们认为只有能正确拟合测试集的函数才是真实目标函数，也就是我们希望学得的模型。
+
+![1741786275086](image/chapter1/1741786275086.png)
