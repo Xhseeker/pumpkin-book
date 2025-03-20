@@ -16,7 +16,7 @@
 
 # 第3章 线性模型
 
-作为"西瓜书"介绍机器学习模型的开篇，线性模型也是机器学习中最为基础的模型，很多复杂模型均可认为由线性模型衍生而得，无论是曾经红极一时的支持向量机还是如今万众瞩目的神经网络，其中都有线性模型的影子。
+作为"西瓜书"介绍机器学习模型的开篇，线性模型也是机器学习中最为基础的模型，很多复杂模型均可认为由线性模型衍生而得，无论是曾经红极一时的支持向量机还是如今万众瞩目的神经网络，其中都有线性模型的影子。 
 
 本章的线性回归和对数几率回归分别是回归和分类任务上常用的算法，因此属于重点内容，线性判别分析不常用，但是其核心思路和后续第10章将会讲到的经典降维算法主成分分析相同，因此也属于重点内容，且两者结合在一起看理解会更深刻。
 
@@ -77,7 +77,6 @@ $$
 \end{aligned}
 $$
 
-
 ### 3.2.4 式(3.6)的推导
 
 已知$E_{(w, b)}=\sum\limits_{i=1}^{m}\left(y_{i}-w x_{i}-b\right)^{2}$，所以
@@ -93,7 +92,6 @@ $$
 \end{aligned}
 $$
 
-
 ### 3.2.5 式(3.7)的推导
 
 推导之前先重点说明一下"闭式解"或称为"解析解"。闭式解是指可以通过具体的表达式解出待解参数，例如可根据式(3.7)直接解得$w$。机器学习算法很少有闭式解，线性回归是一个特例，接下来推导式(3.7)。
@@ -104,7 +102,6 @@ $$
 0 = w\sum_{i=1}^{m}x_i^2-\sum_{i=1}^{m}(y_i-b)x_i
 $$
 
-
 $$
 w\sum_{i=1}^{m}x_i^2 = \sum_{i=1}^{m}y_ix_i-\sum_{i=1}^{m}bx_i
 $$
@@ -112,7 +109,7 @@ $$
 由于令式(3.6)等于0可得$b=\frac{1}{m}\sum_{i=1}^{m}(y_i-wx_i)$，又因为$\frac{1}{m}\sum_{i=1}^{m}y_i=\bar{y}$，$\frac{1}{m}\sum_{i=1}^{m}x_i=\bar{x}$，则$b=\bar{y}-w\bar{x}$，代入上式可得
 
 $$
-\begin{aligned}    
+\begin{aligned}  
 w\sum_{i=1}^{m}x_i^2 & = \sum_{i=1}^{m}y_ix_i-\sum_{i=1}^{m}(\bar{y}-w\bar{x})x_i \\
 w\sum_{i=1}^{m}x_i^2 & = \sum_{i=1}^{m}y_ix_i-\bar{y}\sum_{i=1}^{m}x_i+w\bar{x}\sum_{i=1}^{m}x_i \\
 w(\sum_{i=1}^{m}x_i^2-\bar{x}\sum_{i=1}^{m}x_i) & = \sum_{i=1}^{m}y_ix_i-\bar{y}\sum_{i=1}^{m}x_i \\
@@ -131,7 +128,7 @@ $$
 将$\frac{1}{m}(\sum_{i=1}^{m}x_i)^2=\bar{x}\sum_{i=1}^{m}x_i$代入分母可得
 
 $$
-\begin{aligned}     
+\begin{aligned}   
 w & = \frac{\sum_{i=1}^{m}y_i(x_i-\bar{x})}{\sum_{i=1}^{m}x_i^2-\bar{x}\sum_{i=1}^{m}x_i} \\
 & = \frac{\sum_{i=1}^{m}(y_ix_i-y_i\bar{x})}{\sum_{i=1}^{m}(x_i^2-x_i\bar{x})}
 \end{aligned}
@@ -151,7 +148,6 @@ $$
 $$
 w=\frac{\boldsymbol{x}_{d}^\mathrm{T}\boldsymbol{y}_{d}}{\boldsymbol{x}_d^\mathrm{T}\boldsymbol{x}_{d}}
 $$
-
 
 ### 3.2.6 式(3.9)的推导
 
@@ -189,7 +185,7 @@ $$
 \end{aligned}
 $$
 
-其中 
+其中
 
 $$
 \begin{aligned}
@@ -221,7 +217,6 @@ $$
 \hat{\boldsymbol{w}}^{*}=\underset{\hat{\boldsymbol{w}}}{\arg \min }(\boldsymbol{y}-\mathbf{X} \hat{\boldsymbol{w}})^{\mathrm{T}}(\boldsymbol{y}-\mathbf{X} \hat{\boldsymbol{w}})
 $$
 
-
 ### 3.2.7 式(3.10)的推导
 
 将$E_{\hat{\boldsymbol w}}=(\boldsymbol{y}-\mathbf{X}\hat{\boldsymbol w})^{\mathrm{T}}(\boldsymbol{y}-\mathbf{X}\hat{\boldsymbol w})$展开可得
@@ -244,7 +239,6 @@ $$
 &=2\mathbf{X}^{\mathrm{T}}(\mathbf{X}\hat{\boldsymbol w}-\boldsymbol{y})
 \end{aligned}
 $$
-
 
 ### 3.2.8 式(3.11)的推导
 
@@ -318,23 +312,19 @@ $$
 \nabla^2E_{\hat{\boldsymbol{w}}}=2\mathbf{X}^\mathrm{T}\mathbf{X}
 $$
 
-
 如"西瓜书"中式(3.11)上方的一段话所说，假定$\mathbf{X}^\mathrm{T}\mathbf{X}$为正定矩阵，根据定理3.1可知此时$E_{\hat{\boldsymbol{w}}}$是$\hat{\boldsymbol{w}}$的严格凸函数，接着根据定理3.2可知只需令$E_{\hat{\boldsymbol{w}}}$关于$\hat{\boldsymbol{w}}$的一阶导数等于零向量，即令式(3.10)等于零向量即可求得全局最优解$\hat{\boldsymbol{w}}^{*}$，具体求解过程如下：
 
 $$
 \frac{\partial E_{\hat{\boldsymbol w}}}{\partial \hat{\boldsymbol w}}=2\mathbf{X}^\mathrm{T}(\mathbf{X}\hat{\boldsymbol{w}}-\boldsymbol{y})=\boldsymbol{0}
 $$
 
-
 $$
 2\mathbf{X}^\mathrm{T}\mathbf{X}\hat{\boldsymbol{w}}-2\mathbf{X}^\mathrm{T}\boldsymbol{y}=\boldsymbol{0}
 $$
 
-
 $$
 2\mathbf{X}^\mathrm{T}\mathbf{X}\hat{\boldsymbol{w}}=2\mathbf{X}^\mathrm{T}\boldsymbol{y}
 $$
-
 
 $$
 \hat{\boldsymbol{w}}=(\mathbf{X}^\mathrm{T}\mathbf{X})^{-1}\mathbf{X}^\mathrm{T}\boldsymbol{y}
@@ -371,7 +361,7 @@ $$
 \end{aligned}
 $$
 
-由于$y_i$=0或1，则 
+由于$y_i$=0或1，则
 
 $$
 \ell(\boldsymbol{\beta}) =
@@ -414,11 +404,9 @@ $$
 \boldsymbol{y}^\mathrm{T}\cdot\hat{\boldsymbol{x}}_{i} \hat{\boldsymbol{x}}_{i}^\mathrm{T} p_{1}\left(\hat{\boldsymbol{x}}_{i};\boldsymbol{\beta}\right)\left(1-p_{1}\left(\hat{\boldsymbol{x}}_{i};\boldsymbol{\beta}\right)\right)\cdot\boldsymbol{y}
 $$
 
-
 $$
 \boldsymbol{y}^\mathrm{T}\hat{\boldsymbol{x}}_{i} \hat{\boldsymbol{x}}_{i}^\mathrm{T}\boldsymbol{y} p_{1}\left(\hat{\boldsymbol{x}}_{i};\boldsymbol{\beta}\right)\left(1-p_{1}\left(\hat{\boldsymbol{x}}_{i};\boldsymbol{\beta}\right)\right)
 $$
-
 
 $$
 \left(\boldsymbol{y}^\mathrm{T}\hat{\boldsymbol{x}}_{i}\right)^2 p_{1}\left(\hat{\boldsymbol{x}}_{i};\boldsymbol{\beta}\right)\left(1-p_{1}\left(\hat{\boldsymbol{x}}_{i};\boldsymbol{\beta}\right)\right)
@@ -445,7 +433,6 @@ $$
 $$
 f(\boldsymbol{x}^{t}+a\boldsymbol{d}^{t})=f\left(\boldsymbol{x}^{t}\right)+a\nabla f\left(\boldsymbol{x}^{t}\right)^{\mathrm{T}}\boldsymbol{d}^{t}+o\left(\left\|\boldsymbol{d}^{t}\right\|\right)
 $$
-
 
 $$
 f(\boldsymbol{x}^{t}+a\boldsymbol{d}^{t})-f\left(\boldsymbol{x}^{t}\right)=a\nabla f\left(\boldsymbol{x}^{t}\right)^{\mathrm{T}}\boldsymbol{d}^{t}+o\left(\left\|\boldsymbol{d}^{t}\right\|\right)
@@ -485,7 +472,7 @@ $$
 f(\boldsymbol{x}) \approx f\left(\boldsymbol{x}^{t}\right)+\nabla f\left(\boldsymbol{x}^{t}\right)^{\mathrm{T}}\left(\boldsymbol{x}-\boldsymbol{x}^{t}\right)+\frac{1}{2}\left(\boldsymbol{x}-\boldsymbol{x}^{t}\right)^{\mathrm{T}} \nabla^{2} f\left(\boldsymbol{x}^{t}\right)\left(\boldsymbol{x}-\boldsymbol{x}^{t}\right)
 $$
 
-首先对上式求导 
+首先对上式求导
 
 $$
 \begin{aligned}
@@ -532,7 +519,6 @@ $$
 根据上述牛顿法的迭代公式可知，此式为式(3.27)应用牛顿法时的迭代公式。
 
 ### 3.3.5 式(3.30)的推导
-
 
 $$
 \begin{aligned}
@@ -581,7 +567,7 @@ $$
 \end{aligned}
 $$
 
-所以 
+所以
 
 $$
 \begin{aligned}
@@ -589,7 +575,6 @@ $$
 &=\sum_{i=1}^{m} \hat{\boldsymbol{x}}_{i} \hat{\boldsymbol{x}}_{i}^\mathrm{T} p_{1}\left(\hat{\boldsymbol{x}}_{i};\boldsymbol{\beta}\right)\left(1-p_{1}\left(\hat{\boldsymbol{x}}_{i};\boldsymbol{\beta}\right)\right)
 \end{aligned}
 $$
-
 
 ## 3.4 线性判别分析
 
@@ -617,7 +602,6 @@ $$
 \end{aligned}
 $$
 
-
 ### 3.4.2 式(3.37)到式(3.39)的推导
 
 由式(3.36)，可定义拉格朗日函数为
@@ -626,7 +610,7 @@ $$
 L(\boldsymbol w,\lambda)=-\boldsymbol w^{\mathrm{T}}\mathbf{S}_b\boldsymbol w+\lambda(\boldsymbol w^{\mathrm{T}}\mathbf{S}_w\boldsymbol w-1)
 $$
 
-对$\boldsymbol w$求偏导可得 
+对$\boldsymbol w$求偏导可得
 
 $$
 \begin{aligned}
@@ -647,11 +631,9 @@ $$
 -2\mathbf{S}_b\boldsymbol w+2\lambda\mathbf{S}_w\boldsymbol w=0
 $$
 
-
 $$
 \mathbf{S}_b\boldsymbol w=\lambda\mathbf{S}_w\boldsymbol w
 $$
-
 
 $$
 (\boldsymbol{\mu}_{0}-\boldsymbol{\mu}_{1})(\boldsymbol{\mu}_{0}-\boldsymbol{\mu}_{1})^{\mathrm{T}}\boldsymbol{w}=\lambda\mathbf{S}_w\boldsymbol w
@@ -663,7 +645,6 @@ $$
 \gamma(\boldsymbol{\mu}_{0}-\boldsymbol{\mu}_{1})=\lambda\mathbf{S}_w\boldsymbol w
 $$
 
-
 $$
 \boldsymbol{w}=\frac{\gamma}{\lambda}\mathbf{S}_{w}^{-1}(\boldsymbol{\mu}_{0}-\boldsymbol{\mu}_{1})
 $$
@@ -672,7 +653,7 @@ $$
 
 ### 3.4.3 式(3.43)的推导
 
-由式(3.40)、式(3.41)、式(3.42)可得 
+由式(3.40)、式(3.41)、式(3.42)可得
 
 $$
 \begin{aligned}
@@ -690,7 +671,6 @@ $$
 \end{aligned}
 $$
 
-
 ### 3.4.4 式(3.44)的推导
 
 此式是式(3.35)的推广形式，证明如下。
@@ -706,7 +686,7 @@ $$
 \right.
 $$
 
-所以式(3.44)可变形为 
+所以式(3.44)可变形为
 
 $$
 \max\limits_{\mathbf{W}}\frac{
@@ -721,7 +701,6 @@ $$
 \max\limits_{\mathbf{W}}\frac{
 \prod_{i=1}^{N-1}\boldsymbol w_i^{\mathrm{T}}\mathbf{S}_b \boldsymbol w_i}{\prod_{i=1}^{N-1}\boldsymbol w_i^{\mathrm{T}}\mathbf{S}_w \boldsymbol w_i}=\max\limits_{\mathbf{W}}\prod_{i=1}^{N-1}\frac{\boldsymbol w_i^{\mathrm{T}}\mathbf{S}_b \boldsymbol w_i}{\boldsymbol w_i^{\mathrm{T}}\mathbf{S}_w \boldsymbol w_i}
 $$
-
 
 无论是采用何种优化目标形式，其优化目标只要满足"同类样例的投影点尽可能接近，异类样例的投影点尽可能远离"即可。
 
@@ -761,7 +740,6 @@ $$
 -2\mathbf{S}_b\mathbf{W}+2\lambda\mathbf{S}_w\mathbf{W}=\mathbf{0}
 $$
 
-
 $$
 \mathbf{S}_b\mathbf{W}=\lambda\mathbf{S}_w\mathbf{W}
 $$
@@ -794,7 +772,6 @@ $$
 $$
 -2\mathbf{S}_b\mathbf{W}+2\mathbf{S}_w\mathbf{W}\boldsymbol{\Lambda}=\mathbf{0}
 $$
-
 
 $$
 \mathbf{S}_b\mathbf{W}=\mathbf{S}_w\mathbf{W}\boldsymbol{\Lambda}
@@ -833,6 +810,7 @@ $$
 对于类别不平衡问题，"西瓜书"2.3.1节中的"精度"通常无法满足该特殊任务的需求，例如"西瓜书"在本节第一段的举例：有998个反例和2个正例，若机器学习算法返回一个永远将新样本预测为反例的学习器则能达到99.8%的精度，显然虚高，因此在类别不平衡时常采用2.3节中的查准率、查全率和F1来度量学习器的性能。
 
 ## 参考文献
+
 [1] 王燕军. 最优化基础理论与方法. 复旦大学出版社, 2011.
 
 [2] Wikipedia contributors. Matrix calculus, 2022.
